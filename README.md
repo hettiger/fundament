@@ -13,6 +13,7 @@ You can always drop in some additional npm modules for example.
 * JavaScript and CSS Sourcemaps
 * Browsersync (Live reload + HTTP server for usage across multiple devices)
 * PHP Support
+* Proxy Support
 
 ## Installation
 
@@ -20,18 +21,21 @@ You can always drop in some additional npm modules for example.
 
 ## Usage
 
-Fundament is utilizing [Gulp](http://gulpjs.com/) and provides multiple cli commands:
+Fundament is utilizing [Gulp](http://gulpjs.com/) and provides multiple CLI commands:
 
-| Command           | Description
-|---                |---
-| gulp              | Executes the default task which points to `gulp help`
-| gulp help         | Just suggests to check this file to see a list of all available commands.
-| gulp eslint       | Lints all JavaScript located in the directory `./src/scripts/`
-| gulp scripts      | Lints, bundles and transforms your JavaScript using the entry point `./src/scripts/main.js`
-| gulp styles       | Lints, bundles and transforms your SCSS using the entry point `./src/styles/main.scss`
-| gulp build        | Executes the tasks `scripts` and `styles`
-| __gulp serve__    | Starts a Browsersync HTTP server and opens a new browser tab with the correct development URL. Watches the filesystem for changes, executes the task `build` accordingly and live reloads all Browsersync instances.
-| gulp php-serve    | Actually the same as `gulp serve` but with PHP support. Using `./index.php` instead of `./index.html` as entry point.
+| Command                   | Description
+|---                        |---
+| gulp                      | Executes the default task which points to `gulp help`
+| gulp help                 | Just suggests to check this file to see a list of all available commands
+| gulp eslint               | Lints all JavaScript located in the directory `./src/scripts/`
+| gulp scripts              | Lints, bundles and transforms your JavaScript using the entry point `./src/scripts/main.js`
+| gulp styles               | Lints, bundles and transforms your SCSS using the entry point `./src/styles/main.scss`
+| __gulp build__            | Executes the tasks `scripts` and `styles`
+| __gulp serve__            | Starts a Browsersync HTTP server and opens a new browser tab with the correct development URL. Watches the filesystem for changes, executes tasks accordingly and live / hot reloads all Browsersync instances.
+| __gulp proxy-serve__      | Actually the same as `gulp serve` but this time using a user specified proxy. (listens to the arguments `--https 0` or `--https 1` and `--proxy http://domain.tld`)
+| __gulp php-serve__        | Actually the same as `gulp serve` but with PHP support. Using `./index.php` instead of `./index.html` as entry point.
+
+_Internal tasks wont be mentioned in the above list._
 
 ## File Structure
 
@@ -80,7 +84,7 @@ purposes.
 
 If you want to use this for a CMS theme for example you'll probably need to modify some configuration and/or paths.
 This can be accomplished by editing the file `gulpfile.babel.js`. You may even provide a `router.php` file to
-emulate your CMS's mod_rewrite behaviour. (check out the task `php-serve`)
+emulate your CMS's mod_rewrite behaviour. (check out the task `init-php-server`)
 
 [This is what a `router.php` file might look like.](https://processwire.com/talk/topic/13445-using-phps-built-in-webserver-with-processwire/)
 

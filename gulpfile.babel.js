@@ -52,11 +52,17 @@ gulp.task('styles', () => gulp.src('src/styles/main.scss')
   .pipe(gulp.dest('dist/styles'))
   .pipe(plugins.sourcemaps.write('./'))
   .pipe(gulp.dest('dist/styles'))
+  .pipe(plugins.filter('dist/styles/**/*.css'))
+  .pipe(plugins.if(browserSync.active, reload({ stream: true })))
 );
 
-gulp.task('build', ['scripts', 'styles']);
+gulp.task('watch', () => {
+  gulp.watch(['src/styles/**/*.scss'], ['styles']);
+  gulp.watch(['src/scripts/**/*.js'], ['scripts', reload]);
+  gulp.watch(['./index.html', './src/**/*.html'], reload);
+});
 
-gulp.task('serve', ['build'], () => {
+gulp.task('init-html-server', () => {
   browserSync({
     notify: false,
     logPrefix: 'FUNDAMENT',
@@ -64,13 +70,22 @@ gulp.task('serve', ['build'], () => {
     server: ['./'],
     port: 3000
   });
-
-  gulp.watch(['src/styles/**/*.scss'], ['styles', reload]);
-  gulp.watch(['src/scripts/**/*.js'], ['scripts', reload]);
-  gulp.watch(['./index.html', './src/**/*.html'], reload);
 });
 
-gulp.task('php-serve', ['build'], () => {
+gulp.task('init-proxy-server', () => {
+  let https = Boolean(parseInt(plugins.util.env.https)) || false;
+  let proxy = plugins.util.env.proxy || 'localhost';
+
+  browserSync({
+    notify: false,
+    logPrefix: 'FUNDAMENT',
+    https: https,
+    proxy: proxy,
+    port: 3000
+  });
+});
+
+gulp.task('init-php-server', () => {
   plugins.connectPhp.server({
       port: 8080,
       hostname: '127.0.0.1',
@@ -89,15 +104,15 @@ gulp.task('php-serve', ['build'], () => {
       port: 3000
     })
   );
-
-  gulp.watch(['src/styles/**/*.scss'], ['styles', reload]);
-  gulp.watch(['src/scripts/**/*.js'], ['scripts', reload]);
-  gulp.watch(['./index.php', './src/**/*.php'], reload);
 });
 
 gulp.task('help', () => {
-  process.stdout.write('\r\n\tWelcome to Fundament the straight forward frontend starter kit.\r\n');
-  process.stdout.write('\tPlease check the file "README.md" to see a list of all available commands.\r\n\r\n');
+  plugins.util.log('Welcome to Fundament the straight forward frontend starter kit.');
+  plugins.util.log('Please check the file "README.md" to see a list of all available commands.');
 });
 
+gulp.task('build', ['scripts', 'styles']);
+gulp.task('serve', ['build', 'init-html-server', 'watch']);
+gulp.task('proxy-serve', ['build', 'init-proxy-server', 'watch']);
+gulp.task('php-serve', ['build', 'init-php-server', 'watch']);
 gulp.task('default', ['help']);
