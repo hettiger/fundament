@@ -67,7 +67,32 @@ gulp.task('serve', ['build'], () => {
 
   gulp.watch(['src/styles/**/*.scss'], ['styles', reload]);
   gulp.watch(['src/scripts/**/*.js'], ['scripts', reload]);
-  gulp.watch(['./*.html'], reload);
+  gulp.watch(['./index.html', './src/**/*.html'], reload);
+});
+
+gulp.task('php-serve', ['build'], () => {
+  plugins.connectPhp.server({
+      port: 8080,
+      hostname: '127.0.0.1',
+      base: './', // path to the folder that should be served
+      open: false, // it shouldn't be opened automatically (that's BrowserSync's task)
+      // router: './router.php', // provide a router script to emulate mod_rewrite for example
+      bin: 'php', // useful to force a specific php version for example
+      stdio: 'ignore' // disable php server logging
+    },
+
+    () => browserSync({
+      notify: false,
+      logPrefix: 'FUNDAMENT',
+      https: false,
+      proxy: '127.0.0.1:8080', // use the php server
+      port: 3000
+    })
+  );
+
+  gulp.watch(['src/styles/**/*.scss'], ['styles', reload]);
+  gulp.watch(['src/scripts/**/*.js'], ['scripts', reload]);
+  gulp.watch(['./index.php', './src/**/*.php'], reload);
 });
 
 gulp.task('help', () => {
