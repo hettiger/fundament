@@ -1,0 +1,35 @@
+#######################################
+# Project specific .gitignore rules   #
+#######################################
+
+node_modules/
+npm-debug.log
+dist/scripts/**/*.js
+dist/scripts/**/*.js.map
+dist/styles/**/*.css
+dist/styles/**/*.css.map
+
+
+#######################################
+# General .gitignore rules            #
+#######################################
+
+# IDE
+.idea/
+
+# macOS
+*.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.nfs*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+$RECYCLE.BIN/

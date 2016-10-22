@@ -1,0 +1,10 @@
+@mixin container($width, $height, $overflowX, $overflowY) {
+  position: relative;
+  width: $width;
+  height: $height;
+  overflow-x: $overflowX;
+  overflow-y: $overflowY;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  white-space: normal;
+}

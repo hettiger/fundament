@@ -1,0 +1,12 @@
+html {
+  @include container(100%, 100%, hidden, scroll);
+  background-color: $primary-background-color;
+}
+
+body {
+  @include container(100%, auto, hidden, scroll);
+}
+
+.half-page {
+  @include container(50%, auto, hidden, auto);
+}
