@@ -12,7 +12,7 @@ let plugins = gulpLoadPlugins();
 let reload = browserSync.reload;
 let https = Boolean(parseInt(plugins.util.env.https)) || false;
 let proxy = plugins.util.env.proxy || 'localhost';
-let regex = plugins.util.env.regex || '/styles/main.css';
+let path = plugins.util.env.path || '/styles/main.css';
 
 gulp.task('eslint', () => gulp.src('src/scripts/**/*.js')
   .pipe(plugins.eslint())
@@ -115,8 +115,11 @@ gulp.task('init-remote-proxy', () => {
     files: ['dist/styles/main.css'],
     serveStatic: ['dist'],
     rewriteRules: [{
-      match: new RegExp(regex),
-      fn: () => '/styles/main.css'
+      // match the path and any leading host ignoring get parameters or hashes
+      match: new RegExp(
+        `("|')[^"']*(?=${path})${path}(?:\\?[^="']+=[^&#"']+(?:&[^="']+=[^&#"']+)?)?(?:#[\\w-]+)?("|')`
+      ),
+      replace: '$1/styles/main.css$2'
     }]
   });
 });
