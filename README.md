@@ -11,6 +11,8 @@ You can always drop in some additional npm modules for example.
 * ESLint with desktop error notifications
 * SCSS with autoprefixer and desktop error notifications
 * JavaScript and CSS Sourcemaps
+* Uglifies JavaScript
+* Minifies CSS
 * Browsersync (Live reload + HTTP server for usage across multiple devices)
 * PHP Support
 * Proxy any local Webserver
@@ -29,8 +31,8 @@ Fundament is utilizing [Gulp](http://gulpjs.com/) and provides multiple CLI comm
 | gulp                      | Executes the default task which points to `gulp help`
 | gulp help                 | Just suggests to check this file to see a list of all available commands
 | gulp eslint               | Lints all JavaScript located in the directory `./src/scripts/`
-| gulp scripts              | Lints, bundles and transforms your JavaScript using the entry point `./src/scripts/main.js`
-| gulp styles               | Lints, bundles and transforms your SCSS using the entry point `./src/styles/main.scss`
+| gulp scripts              | Lints, bundles, transforms and uglifies your JavaScript using the entry point `./src/scripts/main.js`
+| gulp styles               | Lints, bundles, transforms and minifies your SCSS using the entry point `./src/styles/main.scss`
 | __gulp build__            | Executes the tasks `scripts` and `styles`
 | __gulp serve__            | Starts a Browsersync HTTP server and opens a new browser tab with the correct development URL. Watches the filesystem for changes, executes tasks accordingly and live / hot reloads all Browsersync instances.
 | gulp php-serve            | Actually the same as `gulp serve` but with PHP support. Using `./index.php` instead of `./index.html` as entry point.

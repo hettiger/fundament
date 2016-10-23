@@ -29,6 +29,7 @@ gulp.task('scripts', ['eslint'], () => {
   .pipe(source('main.js', 'src/scripts'))
   .pipe(buffer())
   .pipe(plugins.sourcemaps.init({ loadMaps: true }))
+  .pipe(plugins.uglify({ preserveComments: 'some' }))
   .pipe(plugins.sourcemaps.write('.'))
   .pipe(gulp.dest('dist/scripts'));
 });
@@ -52,6 +53,7 @@ gulp.task('styles', () => gulp.src('src/styles/main.scss')
     'bb >= 10'
   ]))
   .pipe(gulp.dest('dist/styles'))
+  .pipe(plugins.if('*.css', plugins.cssnano()))
   .pipe(plugins.sourcemaps.write('./'))
   .pipe(gulp.dest('dist/styles'))
   .pipe(plugins.filter('dist/styles/**/*.css'))
