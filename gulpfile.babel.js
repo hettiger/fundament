@@ -10,7 +10,6 @@ import browserSync from 'browser-sync';
 
 let plugins = gulpLoadPlugins();
 let reload = browserSync.reload;
-let https = Boolean(parseInt(plugins.util.env.https)) || false;
 let proxy = plugins.util.env.proxy || 'localhost';
 let path = plugins.util.env.path || '/styles/main.css';
 
@@ -100,8 +99,7 @@ gulp.task('init-local-proxy', () => {
   browserSync({
     notify: false,
     logPrefix: 'FUNDAMENT',
-    https: https,
-    proxy: proxy,
+    proxy,
     port: 3000
   });
 });
@@ -110,8 +108,7 @@ gulp.task('init-remote-proxy', () => {
   browserSync({
     notify: false,
     logPrefix: 'FUNDAMENT',
-    https: https,
-    proxy: proxy,
+    proxy,
     files: ['dist/styles/main.css'],
     serveStatic: ['dist'],
     rewriteRules: [{
