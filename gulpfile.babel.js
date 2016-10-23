@@ -10,6 +10,9 @@ import browserSync from 'browser-sync';
 
 let plugins = gulpLoadPlugins();
 let reload = browserSync.reload;
+let https = Boolean(parseInt(plugins.util.env.https)) || false;
+let proxy = plugins.util.env.proxy || 'localhost';
+let regex = plugins.util.env.regex || '/styles/main.css';
 
 gulp.task('eslint', () => gulp.src('src/scripts/**/*.js')
   .pipe(plugins.eslint())
@@ -72,19 +75,6 @@ gulp.task('init-html-server', () => {
   });
 });
 
-gulp.task('init-proxy-server', () => {
-  let https = Boolean(parseInt(plugins.util.env.https)) || false;
-  let proxy = plugins.util.env.proxy || 'localhost';
-
-  browserSync({
-    notify: false,
-    logPrefix: 'FUNDAMENT',
-    https: https,
-    proxy: proxy,
-    port: 3000
-  });
-});
-
 gulp.task('init-php-server', () => {
   plugins.connectPhp.server({
       port: 8080,
@@ -106,6 +96,31 @@ gulp.task('init-php-server', () => {
   );
 });
 
+gulp.task('init-local-proxy', () => {
+  browserSync({
+    notify: false,
+    logPrefix: 'FUNDAMENT',
+    https: https,
+    proxy: proxy,
+    port: 3000
+  });
+});
+
+gulp.task('init-remote-proxy', () => {
+  browserSync({
+    notify: false,
+    logPrefix: 'FUNDAMENT',
+    https: https,
+    proxy: proxy,
+    files: ['dist/styles/main.css'],
+    serveStatic: ['dist'],
+    rewriteRules: [{
+      match: new RegExp(regex),
+      fn: () => '/styles/main.css'
+    }]
+  });
+});
+
 gulp.task('help', () => {
   plugins.util.log('Welcome to Fundament the straight forward frontend starter kit.');
   plugins.util.log('Please check the file "README.md" to see a list of all available commands.');
@@ -113,6 +128,7 @@ gulp.task('help', () => {
 
 gulp.task('build', ['scripts', 'styles']);
 gulp.task('serve', ['build', 'init-html-server', 'watch']);
-gulp.task('proxy-serve', ['build', 'init-proxy-server', 'watch']);
 gulp.task('php-serve', ['build', 'init-php-server', 'watch']);
+gulp.task('local-proxy', ['build', 'init-local-proxy', 'watch']);
+gulp.task('remote-proxy', ['build', 'init-remote-proxy', 'watch']);
 gulp.task('default', ['help']);

@@ -13,7 +13,8 @@ You can always drop in some additional npm modules for example.
 * JavaScript and CSS Sourcemaps
 * Browsersync (Live reload + HTTP server for usage across multiple devices)
 * PHP Support
-* Proxy Support
+* Proxy any local Webserver
+* Proxy any remote Website and inject style changes on the fly
 
 ## Installation
 
@@ -32,10 +33,13 @@ Fundament is utilizing [Gulp](http://gulpjs.com/) and provides multiple CLI comm
 | gulp styles               | Lints, bundles and transforms your SCSS using the entry point `./src/styles/main.scss`
 | __gulp build__            | Executes the tasks `scripts` and `styles`
 | __gulp serve__            | Starts a Browsersync HTTP server and opens a new browser tab with the correct development URL. Watches the filesystem for changes, executes tasks accordingly and live / hot reloads all Browsersync instances.
-| __gulp proxy-serve__      | Actually the same as `gulp serve` but this time using a user specified proxy. (listens to the arguments `--https 0` or `--https 1` and `--proxy http://domain.tld`)
-| __gulp php-serve__        | Actually the same as `gulp serve` but with PHP support. Using `./index.php` instead of `./index.html` as entry point.
+| gulp php-serve            | Actually the same as `gulp serve` but with PHP support. Using `./index.php` instead of `./index.html` as entry point.
+| gulp local-proxy          | Behind the scenes `gulp php-serve` is using PHP's built in webserver and BrowserSync in proxy mode. This command allows you to use any local server together with BrowserSync and your compiled assets. (listens to the arguments `--https 0` or `--https 1` and `--proxy http://domain.tld`)
+| __gulp remote-proxy__     | Sometimes you may need to work on the __styles__* of a live published website without the convenience of a development environment. You could use the developer tools of your browser to a certain degree but at some point you just need your SCSS setup with autoprefixing in place ... The solution: Fundament creates your build and injects it on the fly into the proxied production website. You'll see changes immediately. Users wont be disturbed. Once the job is done just deploy your new stylesheet. (listens to the arguments `--https 0` or `--https 1`, `--proxy http://domain.tld` and `--regex /path/to/stylesheet/that/needs/to/be/replaced.css`) 
 
 _Internal tasks wont be mentioned in the above list._
+
+_* Currently only styles are supported._
 
 ## File Structure
 
