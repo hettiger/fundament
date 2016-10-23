@@ -96,3 +96,18 @@ emulate your CMS's mod_rewrite behaviour. (check out the task `init-php-server`)
 
 Since such needs are very individual please understand that i cannot provide any assistance when it comes to
 altering the base configuration. I suggest you look at Gulp's documentation or the specific node module's one.
+
+## Remote Proxy
+
+I thought it may be a good idea to provide an example for this feature so here it is:
+
+`gulp remote-proxy --proxy http://getbootstrap.com --path blog.css`
+
+Your browser will open `http://localhost:3000` and it will look just like the original `http://getbootstrap.com`.
+Now navigate to `Getting started / Examples` and open up the `Blog` Example.*
+
+As you can see it is not really looking familiar. That's because the stylesheet `blog.css` has been replaced with
+`./dist/styles/main.css`. Now please go ahead and edit the styles under `./src/styles`. You'll see that on each save
+your changes will be reflected almost instantly in the browser.
+
+_* You might as well navigate directly to [http://localhost:3000/examples/blog/](http://localhost:3000/examples/blog/)_
