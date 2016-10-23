@@ -1,3 +1,8 @@
+<?php
+
+$version = PHP_VERSION;
+
+echo <<<HTML
 <!doctype html>
 <html lang="en">
 <head>
@@ -10,7 +15,7 @@
     <link rel="stylesheet" href="dist/styles/main.css">
 </head>
 <body data-page-type="example">
-    <h1>Plain HTML works great!</h1>
+    <h1>PHP {$version} works as well!</h1>
     <div class="half-page">
         http://sdafdfsdaafs.fdasfasdfsafsad.fdsafafafsad/dsaffsfasdfdsfadsfsadfdsfadfsdafadsfdsa-fdfadsasdfadsfasdfd-fdasfsadfdsafadsfadsfdsafdsafadsfads-fdsafsadfasdfdasfasdfsadfdsaf
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem ex, soluta? Animi aperiam, atque dignissimos dolorum ea esse explicabo harum minima natus quam! Ad adipisci animi assumenda atque corporis distinctio doloremque dolorum ducimus ea enim eos, est eveniet ex fuga fugiat in incidunt ipsa iusto labore maiores neque nesciunt non nostrum odio pariatur placeat praesentium quasi quidem recusandae sint tempore unde vel velit, veniam vero voluptates, voluptatibus. Corporis libero maxime vel. Ab accusantium, aliquam cum debitis distinctio dolore eaque earum eos excepturi hic ipsam magnam, maiores modi nam nisi nostrum optio placeat praesentium quisquam quos rem similique voluptates voluptatibus. Amet, culpa cumque dolorum ea enim libero, magni numquam perspiciatis quis sapiente sed ut? Eligendi id impedit labore nihil odit perferendis qui ratione totam ullam! Asperiores beatae consectetur debitis deserunt, dolor exercitationem magni minima molestias nam nemo nisi, perspiciatis quasi repudiandae vel vitae voluptatem, voluptatibus. Ab alias animi asperiores aspernatur at beatae commodi distinctio dolor doloremque eius, est eveniet inventore libero natus neque nisi numquam optio quam quas, quibusdam recusandae reiciendis rem repellat similique ullam vero voluptates? Atque cum expedita iusto laborum laudantium libero, modi nobis, nulla omnis qui quibusdam recusandae rem repudiandae similique tempore voluptates voluptatum. Alias eveniet, explicabo impedit in molestias nihil odit possimus quaerat. Accusantium aliquam, aliquid consectetur cumque cupiditate dolor eius expedita facere, facilis fugit harum ipsa numquam quod reprehenderit temporibus voluptas voluptate? Enim id ipsam nisi rem voluptatibus! Consequatur distinctio dolor eum eveniet illum minima natus, nisi odit qui sapiente, temporibus tenetur totam. Amet dolore doloribus et facilis nam natus obcaecati quibusdam quos. Alias aspernatur at atque corporis delectus distinctio dolores fugiat iste iure labore maiores minima necessitatibus, nisi, nobis numquam odit officia quas qui quis reiciendis repellat reprehenderit sapiente similique totam ullam vel voluptas voluptatibus? Accusamus adipisci aut autem beatae corporis cum debitis deleniti distinctio doloremque dolores ducimus ea eligendi error eveniet in modi molestias necessitatibus nisi odit quas quisquam quod rem repellendus reprehenderit, similique suscipit veniam vitae. At fugit laudantium reiciendis. Architecto at culpa est eum temporibus? Ab architecto asperiores corporis ea error et, eveniet fugit, illum minima, provident quis recusandae reiciendis sapiente sequi voluptas. Accusantium amet autem consequatur cupiditate dicta dolore doloremque eaque earum error est, eum facilis in incidunt ipsum laboriosam maiores mollitia natus nisi nobis odit pariatur possimus quae quam quia quidem quos repudiandae sapiente sint sunt temporibus totam vero voluptates voluptatibus. Ad alias consectetur dolorum fuga fugit non officiis perspiciatis placeat provident quasi, sit ut, voluptatem? Adipisci aperiam deleniti dicta dignissimos dolores earum eius eveniet excepturi illum inventore, molestias omnis placeat porro similique tenetur? Accusamus ad aliquid aspernatur at autem, consectetur doloribus explicabo facere in laborum, maxime nam odit perspiciatis quidem quis quisquam sequi, sunt? A ab adipisci aliquam aut debitis delectus enim eos exercitationem facilis illum ipsum laudantium maiores molestiae natus, nobis officia omnis quae quaerat quisquam rerum saepe sint sunt tempore totam ullam ut voluptas? Blanditiis earum esse eum ipsa nam, nisi nulla recusandae reiciendis rerum vitae. Architecto error exercitationem officiis repudiandae sed? Aperiam corporis debitis incidunt ipsam.
@@ -20,3 +25,4 @@
     <script async="async" src="dist/scripts/main.js"></script>
 </body>
 </html>
+HTML;
