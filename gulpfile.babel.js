@@ -3,6 +3,8 @@
 import gulp from 'gulp';
 import gulpLoadPlugins from 'gulp-load-plugins';
 import rollup from 'rollup-stream';
+import commonjs from 'rollup-plugin-commonjs';
+import nodeResolve from 'rollup-plugin-node-resolve';
 import buble from 'rollup-plugin-buble';
 import source from 'vinyl-source-stream';
 import buffer from 'vinyl-buffer';
@@ -24,7 +26,11 @@ gulp.task('scripts', ['eslint'], () => {
   return rollup({
     entry: 'src/scripts/main.js',
     sourceMap: true,
-    plugins: [buble()]
+    plugins: [
+        nodeResolve({ jsnext: true, main: true }),
+        commonjs(),
+        buble()
+    ]
   })
   .pipe(source('main.js', 'src/scripts'))
   .pipe(buffer())
