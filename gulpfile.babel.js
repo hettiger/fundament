@@ -70,6 +70,7 @@ gulp.task('watch', () => {
   gulp.watch(['src/styles/**/*.scss'], ['styles']);
   gulp.watch(['src/scripts/**/*.js'], ['scripts', reload]);
   gulp.watch(['./index.html', './src/**/*.html'], reload);
+  gulp.watch(['./index.php', './src/**/*.php'], reload);
 });
 
 gulp.task('init-html-server', () => {
