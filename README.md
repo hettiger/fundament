@@ -1,8 +1,7 @@
 # Fundament
 
 Fundament is a straight forward frontend starter kit. It supports many goodies that help you make better websites
-or maybe even hybrid apps. Fundament get's out of your way providing you only the basic tooling. Need some more?
-You can always drop in some additional npm modules for example.
+or maybe even hybrid apps. Fundament get's out of your way providing you only the basic tooling.
 
 ## Features
 
