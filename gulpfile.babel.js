@@ -13,7 +13,9 @@ import browserSync from 'browser-sync';
 let plugins = gulpLoadPlugins();
 let reload = browserSync.reload;
 let proxy = plugins.util.env.proxy || 'localhost';
-let path = plugins.util.env.path || '/styles/main.css';
+let path = plugins.util.env.path || false;
+let css_path = plugins.util.env.css_path || path;
+let js_path = plugins.util.env.js_path || false;
 
 gulp.task('eslint', () => gulp.src('src/scripts/**/*.js')
   .pipe(plugins.eslint())
@@ -114,19 +116,74 @@ gulp.task('init-local-proxy', () => {
 });
 
 gulp.task('init-remote-proxy', () => {
+  let rewriteRules = [];
+  let additionalCode = '';
+
+  if (css_path) {
+    rewriteRules.push({
+      // match the path and any leading host ignoring get parameters or hashes
+      match: new RegExp(
+        `("|')[^"']*(?=${css_path})${css_path}(?:\\?[^="']+=[^&#"']+(?:&[^="']+=[^&#"']+)?)?(?:#[\\w-]+)?("|')`
+      ),
+      replace: '$1/styles/main.css$2'
+    });
+  } else {
+    additionalCode += '<link rel="stylesheet" type="text/css" href="/styles/main.css">';
+  }
+
+  if (js_path) {
+    rewriteRules.push({
+      // match the path and any leading host ignoring get parameters or hashes
+      match: new RegExp(
+        `("|')[^"']*(?=${js_path})${js_path}(?:\\?[^="']+=[^&#"']+(?:&[^="']+=[^&#"']+)?)?(?:#[\\w-]+)?("|')`
+      ),
+      replace: '$1/scripts/main.js$2'
+    });
+  } else {
+    additionalCode += `
+      <script>
+        // Inject the script main.js on the window load event.
+        // Because main.js may depend on the window load event fire it again at the right time.
+        (function (target, type, listener) {
+          target.addEventListener(type, function fn (event) {
+              target.removeEventListener(type, fn);
+              listener(event);
+          });
+        })(window, 'load', function() { 
+          var script = document.createElement("script");
+          
+          script.defer = "defer"; 
+          script.src = "/scripts/main.js";
+          script.addEventListener('load', function() {
+            var event = document.createEvent('Event');  
+            event.initEvent('load', false, false);  
+            window.dispatchEvent(event); 
+          });
+          
+          document.body.appendChild(script); 
+        });
+      </script>
+    `;
+  }
+
   browserSync({
     notify: false,
     logPrefix: 'FUNDAMENT',
     proxy,
-    files: ['dist/styles/main.css'],
     serveStatic: ['dist'],
-    rewriteRules: [{
-      // match the path and any leading host ignoring get parameters or hashes
-      match: new RegExp(
-        `("|')[^"']*(?=${path})${path}(?:\\?[^="']+=[^&#"']+(?:&[^="']+=[^&#"']+)?)?(?:#[\\w-]+)?("|')`
-      ),
-      replace: '$1/styles/main.css$2'
-    }]
+    files: [
+      'dist/styles/main.css',
+      'dist/scripts/main.js'
+    ],
+    rewriteRules,
+    snippetOptions: {
+      rule: {
+        match: /<\/body>/i,
+        fn: function (snippet, match) {
+          return additionalCode + snippet + match;
+        }
+      }
+    }
   });
 });
 
