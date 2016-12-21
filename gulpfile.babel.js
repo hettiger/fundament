@@ -171,10 +171,6 @@ gulp.task('init-remote-proxy', () => {
     logPrefix: 'FUNDAMENT',
     proxy,
     serveStatic: ['dist'],
-    files: [
-      'dist/styles/main.css',
-      'dist/scripts/main.js'
-    ],
     rewriteRules,
     snippetOptions: {
       rule: {
