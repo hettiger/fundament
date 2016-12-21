@@ -15,7 +15,7 @@ or maybe even hybrid apps. Fundament get's out of your way providing you only th
 * Browsersync (Live reload + HTTP server for usage across multiple devices)
 * PHP Support
 * Proxy any local Webserver
-* Proxy any remote Website and inject style changes on the fly
+* Proxy any remote Website and inject a stylesheet and script (styles support hotreloading)
 
 ## Installation
 
@@ -36,11 +36,9 @@ Fundament is utilizing [Gulp](http://gulpjs.com/) and provides multiple CLI comm
 | __gulp serve__            | Starts a Browsersync HTTP server and opens a new browser tab with the correct development URL. Watches the filesystem for changes, executes tasks accordingly and live / hot reloads all Browsersync instances.
 | gulp php-serve            | Actually the same as `gulp serve` but with PHP support. Using `./index.php` instead of `./index.html` as entry point.
 | gulp local-proxy          | Behind the scenes `gulp php-serve` is using PHP's built in webserver and BrowserSync in proxy mode. This command allows you to use any local server together with BrowserSync and your compiled assets. (listens to the argument `--proxy https://domain.tld`)
-| __gulp remote-proxy__     | Sometimes you may need to work on the __styles__* of a live published website without the convenience of a development environment. You could use the developer tools of your browser to a certain degree but at some point you just need your SCSS setup with autoprefixing in place ... The solution: Fundament creates your build and injects it on the fly into the proxied production website. You'll see changes immediately. Users wont be disturbed. Once the job is done just deploy your new stylesheet. (listens to the arguments `--proxy https://domain.tld` and `--path /to/stylesheet/that/needs/to/be/replaced.css`) 
+| __gulp remote-proxy__     | Sometimes you may need to work on the __styles__ or __script__ of a live published website without the convenience of a development environment. You could use the developer tools of your browser to a certain degree but at some point you just need your SCSS setup with autoprefixing in place ... The solution: Fundament creates your build and injects it on the fly into the proxied production website. You'll see changes immediately. Users wont be disturbed. Once the job is done just deploy your new stylesheet / script. (listens to the arguments `--proxy https://domain.tld`, `--css_path /to/stylesheet/that/needs/to/be/replaced.css` and `--js_path /to/script/that/needs/to/be/replaced.js`. If you don't provide a `--css_path` or `--js_path` the styles / script gets injected above the closing body tag.) 
 
 _Internal tasks wont be mentioned in the above list._
-
-_* Currently only styles are supported._
 
 ## File Structure
 
@@ -100,7 +98,7 @@ altering the base configuration. I suggest you look at Gulp's documentation or t
 
 I thought it may be a good idea to provide an example for this feature so here it is:
 
-`gulp remote-proxy --proxy http://getbootstrap.com --path blog.css`
+`gulp remote-proxy --proxy http://getbootstrap.com --css_path blog.css`
 
 Your browser will open `http://localhost:3000` and it will look just like the original `http://getbootstrap.com`.
 Now navigate to `Getting started / Examples` and open up the `Blog` Example.*
