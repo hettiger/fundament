@@ -27,6 +27,7 @@ gulp.task('eslint', () => gulp.src('src/scripts/**/*.js')
 gulp.task('scripts', ['eslint'], () => {
   return rollup({
     entry: 'src/scripts/main.js',
+    format: 'es',
     sourceMap: true,
     plugins: [
         nodeResolve({ jsnext: true, main: true }),
